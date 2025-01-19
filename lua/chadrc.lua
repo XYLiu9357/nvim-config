@@ -4,12 +4,12 @@
 local M = {}
 
 M.base46 = {
-	theme = "gatekeeper",
-	transparency = false,
+    theme = "gatekeeper",
+    transparency = false,
 }
 
 M.ui = {
-	statusline = { theme = "vscode" },
+    statusline = { theme = "vscode" },
 }
 
 return M

@@ -15,7 +15,7 @@ map("v", "K", "<cmd>m '<-2<CR>gv=gv", { noremap = true })
 
 -- theme switcher
 map("n", "<leader>th", function()
-	require("nvchad.themes").open { style = "compact", border = false }
+    require("nvchad.themes").open { style = "compact", border = false }
 end, { noremap = true, desc = "nvchad theme switcher" })
 
 -- telescope
@@ -30,8 +30,8 @@ map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window"
 -- lsp
 map("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<A-S-F>",
-	vim.lsp.buf.format,
-	{ noremap = true, desc = "Format buffer using LSP" }
+    vim.lsp.buf.format,
+    { noremap = true, desc = "Format buffer using LSP" }
 )
 
 -- toggle lsp diagnostics info
