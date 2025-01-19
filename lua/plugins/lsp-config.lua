@@ -4,7 +4,6 @@ return {
 		"williamboman/mason.nvim",
 		opts = {},
 	},
-
 	{
 		"williamboman/mason-lspconfig.nvim",
 		opts = {
@@ -16,16 +15,21 @@ return {
 			},
 		},
 	},
-
 	{
 		"neovim/nvim-lspconfig",
 		config = function()
 			local lspconfig = require("lspconfig")
-			lspconfig.lua_ls.setup({})
-			lspconfig.clangd.setup({})
+			local capabilities = require("cmp_nvim_lsp").default_capabilities() -- cmp-nvim-lsp support
 
-			-- python lsp setup: pyright for text hover and ruff for linting and formatting
+			-- lua lsp setup
+			lspconfig.lua_ls.setup({ capabilities = capabilities })
+
+			-- c++ lsp setup
+			lspconfig.clangd.setup({ capabilities = capabilities })
+
+			-- python lsp setup: pyright for hover and ruff for linting and formatting
 			lspconfig.pyright.setup({
+				capabilities = capabilities,
 				settings = {
 					pyright = {
 						-- using ruff's import organizer
@@ -41,6 +45,7 @@ return {
 			})
 
 			lspconfig.ruff.setup({
+				capabilities = capabilities,
 				init_options = {
 					settings = {
 						-- Ruff language server settings go here

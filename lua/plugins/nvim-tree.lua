@@ -11,4 +11,3 @@ return {
 	-- 	require("nvim-tree").setup {}
 	-- end,
 }
-

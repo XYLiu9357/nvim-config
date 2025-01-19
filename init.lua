@@ -1,7 +1,7 @@
 vim.g.mapleader = " "
 
 -- base46: put this before lazy setup
-vim.g.base46_cache = vim.fn.stdpath "data" .. "/base46_cache/"
+vim.g.base46_cache = vim.fn.stdpath("data") .. "/base46_cache/"
 
 require("configs.lazy")
 
@@ -13,4 +13,3 @@ dofile(vim.g.base46_cache .. "treesitter")
 
 require("core.options")
 require("core.mappings")
-

@@ -8,4 +8,3 @@ return {
 		indent = { enable = true },
 	},
 }
-
