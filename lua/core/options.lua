@@ -32,3 +32,8 @@ o.updatetime = 250
 o.timeoutlen = 400
 o.undofile = true
 
+-- diagnostics visibility
+vim.diagnostic.config({
+	virtual_text = false,
+	underline = false
+})
