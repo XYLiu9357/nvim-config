@@ -2,9 +2,9 @@ local map = vim.keymap.set
 
 -- normal mode
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("n", "<leader>sv", "<C-w>v")
-map("n", "<leader>sh", "<C-w>h")
-map("n", "<leader>nh", "<cmd>noh<CR>")
+map("n", "<leader>sv", "<C-w>v", { noremap = true, desc = "Split window vertically" })
+map("n", "<leader>sh", "<C-w>h", { desc = "Split window horizontally" })
+map("n", "<leader>nh", "<cmd>noh<CR>", { desc = "Clear highlights" })
 -- map({ "n", "i", "v" }, "<C-s>", "<cmd> w <cr>")
 
 -- insert mode
@@ -40,3 +40,16 @@ map("n", "<leader>dg", function()
     underline = isLspDiagnosticsVisible,
   })
 end)
+
+-- github copilot
+local is_copilot_enabled = true
+map("n", "<leader>cc", function()
+  vim.g.copilot_enabled = not vim.g.copilot_enabled
+  if vim.g.copilot_enabled then
+    vim.cmd("Copilot disable")
+    print("Copilot OFF")
+  else
+    vim.cmd("Copilot enable")
+    print("Copilot ON")
+  end
+end, { desc = "Toggle Github Copilot", noremap = true })
