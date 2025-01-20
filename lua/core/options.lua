@@ -10,10 +10,10 @@ o.splitright = true
 
 -- indentation
 o.expandtab = true
-o.shiftwidth = 4
+o.shiftwidth = 2
 o.smartindent = true
-o.tabstop = 4
-o.softtabstop = 4
+o.tabstop = 2
+o.softtabstop = 2
 
 -- line numbering
 o.number = true
@@ -31,10 +31,10 @@ o.smartcase = true
 o.updatetime = 250
 o.timeoutlen = 400
 o.undofile = true
-vim.opt.whichwrap:append "<>[]hl"
+vim.opt.whichwrap:append("<>[]hl")
 
 -- diagnostics visibility
 vim.diagnostic.config({
-    virtual_text = false,
-    underline = false
+  virtual_text = false,
+  underline = false,
 })
