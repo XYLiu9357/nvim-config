@@ -12,6 +12,7 @@ return {
         "lua_ls",
         "pyright",
         "ruff",
+        "matlab_ls",
       },
     },
   },
@@ -81,6 +82,18 @@ return {
           end
         end,
         desc = "LSP: Disable hover capability from Ruff",
+      })
+
+      -- matlab lsp setup
+      lspconfig.matlab_ls.setup({
+        capabilities = capabilities,
+        settings = {
+          filetypes = { "matlab" },
+          matlab = {
+            installPath = "/mnt/d/Program Files/MATLAB/R2024b",
+          },
+          single_file_support = true,
+        },
       })
     end,
   },
