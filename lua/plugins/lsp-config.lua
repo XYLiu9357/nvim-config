@@ -12,6 +12,7 @@ return {
         "lua_ls",
         "pyright",
         "ruff",
+        "texlab",
         "matlab_ls",
       },
     },
@@ -95,6 +96,40 @@ return {
           single_file_support = true,
         },
       })
+
+      -- latex lsp setup
+      lspconfig.texlab.setup({
+        capabilities = capabilities,
+        settings = {
+          texlab = {
+            auxDirectory = ".",
+            bibtexFormatter = "texlab",
+            build = {
+              args = { "--lualatex", "--synctex", "--interaction=nonstopmode", "--shell-escape", "%f" },
+              executable = "latexmk",
+              forwardSearchAfter = false,
+              onSave = true,
+            },
+            chktex = {
+              onEdit = false,
+              onOpenAndSave = true,
+            },
+            diagnosticsDelay = 300,
+            formatterLineLength = 80,
+            forwardSearch = {
+              args = {},
+              executable = "zathura",
+              onSave = true,
+            },
+            latexFormatter = "latexindent",
+            latexindent = {
+              modifyLineBreaks = false,
+            },
+          },
+        },
+      })
+
+      -- end of config
     end,
   },
 }
