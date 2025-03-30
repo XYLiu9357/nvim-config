@@ -31,6 +31,7 @@ o.smartcase = true
 o.updatetime = 250
 o.timeoutlen = 400
 o.undofile = true
+o.linebreak = true
 vim.opt.whichwrap:append("<>[]hl")
 
 -- diagnostics visibility

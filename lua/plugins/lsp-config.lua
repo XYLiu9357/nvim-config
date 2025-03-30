@@ -9,6 +9,7 @@ return {
     opts = {
       ensure_installed = {
         "clangd",
+        -- "dockerls",
         "lua_ls",
         "pyright",
         "ruff",
@@ -37,6 +38,9 @@ return {
           "--header-insertion=never",
         },
       })
+
+      -- docker lsp setup
+      -- lspconfig.dockerls.setup{}
 
       -- python lsp setup: pyright for hover and ruff for linting and formatting
       lspconfig.pyright.setup({
@@ -118,7 +122,7 @@ return {
             formatterLineLength = 80,
             forwardSearch = {
               args = {},
-              executable = "zathura",
+              executable = "sumatraPDF",
               onSave = true,
             },
             latexFormatter = "latexindent",
