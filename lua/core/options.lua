@@ -9,7 +9,7 @@ o.splitbelow = true
 o.splitright = true
 
 -- indentation
-o.expandtab = false
+o.expandtab = true
 o.shiftwidth = 2
 o.smartindent = true
 o.tabstop = 2
