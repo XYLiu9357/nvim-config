@@ -1,16 +1,16 @@
 return {
   {
-    "hrsh7th/cmp-nvim-lsp",
+    "hrsh7th/cmp-nvim-lsp", -- pull completions from LSP to nvim-cmp
   },
   {
-    "L3MON4D3/LuaSnip",
+    "L3MON4D3/LuaSnip",               -- allows defining and expanding code snippets
     dependencies = {
-      "saadparwaiz1/cmp_luasnip",
-      "rafamadriz/friendly-snippets",
+      "saadparwaiz1/cmp_luasnip",     -- Lets nvim-cmp offer snippets from LuaSnip
+      "rafamadriz/friendly-snippets", -- Prebuilt snippets for many languages
     },
   },
   {
-    "hrsh7th/nvim-cmp",
+    "hrsh7th/nvim-cmp", -- completion engine, does nothing on its own
     config = function()
       -- Set up nvim-cmp.
       local cmp = require("cmp")
@@ -37,6 +37,26 @@ return {
           ["<C-Space>"] = cmp.mapping.complete(),
           ["<C-e>"] = cmp.mapping.abort(),
           ["<CR>"] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+          -- The tab settings may conflict with GitHub Copilot
+          ["<Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_next_item()
+            elseif require("luasnip").expand_or_jumpable() then
+              require("luasnip").expand_or_jump()
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
+          ["<S-Tab>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              cmp.select_prev_item()
+            elseif require("luasnip").jumpable(-1) then
+              require("luasnip").jump(-1)
+            else
+              fallback()
+            end
+          end, { "i", "s" }),
         }),
         sources = cmp.config.sources({
           { name = "nvim_lsp" },

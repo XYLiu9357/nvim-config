@@ -15,7 +15,7 @@ map("v", "K", "<cmd>m '<-2<CR>gv=gv", { noremap = true })
 
 -- theme switcher
 map("n", "<leader>th", function()
-	require("nvchad.themes").open({ style = "compact", border = false })
+  require("nvchad.themes").open({ style = "compact", border = false })
 end, { noremap = true, desc = "nvchad theme switcher" })
 
 -- telescope
@@ -34,21 +34,25 @@ vim.keymap.set("n", "<A-S-F>", vim.lsp.buf.format, { noremap = true, desc = "For
 -- toggle lsp diagnostics info: off by default, see options.lua
 local isLspDiagnosticsVisible = false
 map("n", "<leader>dg", function()
-	isLspDiagnosticsVisible = not isLspDiagnosticsVisible
-	vim.diagnostic.config({
-		virtual_text = isLspDiagnosticsVisible,
-		underline = isLspDiagnosticsVisible,
-	})
+  isLspDiagnosticsVisible = not isLspDiagnosticsVisible
+  vim.diagnostic.config({
+    virtual_text = isLspDiagnosticsVisible,
+    underline = isLspDiagnosticsVisible,
+  })
 end)
 
--- github copilot
-map("n", "<leader>cc", function()
-	vim.g.copilot_enabled = not vim.g.copilot_enabled
-	if vim.g.copilot_enabled then
-		vim.cmd("Copilot disable")
-		print("Copilot OFF")
-	else
-		vim.cmd("Copilot enable")
-		print("Copilot ON")
-	end
-end, { desc = "Toggle Github Copilot", noremap = true })
+-- github copilot toggle
+-- Disable copilot by default
+local copilot_on = false
+vim.cmd("Copilot disable")
+vim.api.nvim_create_user_command("CopilotToggle", function()
+  if copilot_on then
+    vim.cmd("Copilot disable")
+    print("Copilot OFF")
+  else
+    vim.cmd("Copilot enable")
+    print("Copilot ON")
+  end
+  copilot_on = not copilot_on
+end, { nargs = 0 })
+vim.keymap.set("n", "<leader>gc", ":CopilotToggle<CR>", { noremap = true, silent = true })
