@@ -9,10 +9,11 @@ return {
     opts = {
       ensure_installed = {
         "clangd",
-        -- "dockerls",
+        "dockerls",
         "lua_ls",
         "pyright",
         "ruff",
+        "rust_analyzer",
         "texlab",
         "matlab_ls",
       },
@@ -40,7 +41,7 @@ return {
       })
 
       -- docker lsp setup
-      -- lspconfig.dockerls.setup{}
+      lspconfig.dockerls.setup({})
 
       -- python lsp setup: pyright for hover and ruff for linting and formatting
       lspconfig.pyright.setup({
@@ -74,20 +75,32 @@ return {
         },
       })
 
-      -- disable ruff hover in favor of pyright
-      vim.api.nvim_create_autocmd("LspAttach", {
-        group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
-        callback = function(args)
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          if client == nil then
-            return
-          end
-          if client.name == "ruff" then
-            client.server_capabilities.hoverProvider = false
-          end
-        end,
-        desc = "LSP: Disable hover capability from Ruff",
+      -- rust lsp setup
+      lspconfig.rust_analyzer.setup({
+        capabilities = capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            diagnostics = {
+              enable = false,
+            },
+          },
+        },
       })
+
+      -- disable ruff hover in favor of pyright
+      -- vim.api.nvim_create_autocmd("LspAttach", {
+      --   group = vim.api.nvim_create_augroup("lsp_attach_disable_ruff_hover", { clear = true }),
+      --   callback = function(args)
+      --     local client = vim.lsp.get_client_by_id(args.data.client_id)
+      --     if client == nil then
+      --       return
+      --     end
+      --     if client.name == "ruff" then
+      --       client.server_capabilities.hoverProvider = false
+      --     end
+      --   end,
+      --   desc = "LSP: Disable hover capability from Ruff",
+      -- })
 
       -- matlab lsp setup
       lspconfig.matlab_ls.setup({
