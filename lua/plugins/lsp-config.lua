@@ -10,11 +10,12 @@ return {
       ensure_installed = {
         "clangd",
         "dockerls",
+        "gopls",
         "lua_ls",
         "pyright",
         "rust_analyzer",
         "texlab",
-        "matlab_ls",
+        -- "matlab_ls",
       },
     },
   },
@@ -40,24 +41,43 @@ return {
       })
 
       -- docker lsp setup
-      lspconfig.dockerls.setup({})
+      lspconfig.dockerls.setup({
+        capabilities = capabilities,
+        filetypes = { "dockerfile" },
+      })
+
+      -- golang lsp setup
+      lspconfig.gopls.setup({
+        capabilities = capabilities,
+        settings = {
+          gopls = {
+            analyses = {
+              unusedparams = true,
+              shadow = true,
+            },
+            staticcheck = true,
+            usePlaceholders = true,
+            completeUnimported = true,
+          },
+        },
+      })
 
       -- python lsp setup
       lspconfig.pyright.setup({
         capabilities = capabilities,
       })
 
-      -- matlab lsp setup
-      lspconfig.matlab_ls.setup({
-        capabilities = capabilities,
-        settings = {
-          filetypes = { "matlab" },
-          matlab = {
-            installPath = "/mnt/d/Program Files/MATLAB/R2024b",
-          },
-          single_file_support = true,
-        },
-      })
+      -- -- matlab lsp setup
+      -- lspconfig.matlab_ls.setup({
+      --   capabilities = capabilities,
+      --   settings = {
+      --     filetypes = { "matlab" },
+      --     matlab = {
+      --       installPath = "/mnt/d/Program Files/MATLAB/R2024b",
+      --     },
+      --     single_file_support = true,
+      --   },
+      -- })
 
       -- latex lsp setup
       lspconfig.texlab.setup({
@@ -65,7 +85,7 @@ return {
         settings = {
           texlab = {
             auxDirectory = ".",
-            bibtexFormatter = "texlab",
+            bibtexFormatter = "/mnt/d/texlive/2023/bin/windows/texlab.exe",
             build = {
               args = { "--lualatex", "--synctex", "--interaction=nonstopmode", "--shell-escape", "%f" },
               executable = "latexmk",
@@ -80,10 +100,10 @@ return {
             formatterLineLength = 80,
             forwardSearch = {
               args = {},
-              executable = "sumatraPDF",
+              executable = "/mnt/c/Users/flotc/AppData/Local/SumatraPDF.exe",
               onSave = true,
             },
-            latexFormatter = "latexindent",
+            latexFormatter = "/mnt/d/texlive/2023/bin/windows/latexindent.exe",
             latexindent = {
               modifyLineBreaks = false,
             },
