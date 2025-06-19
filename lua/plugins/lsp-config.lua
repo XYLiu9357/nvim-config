@@ -11,6 +11,7 @@ return {
         "clangd",
         "dockerls",
         "gopls",
+        "jdtls",
         "lua_ls",
         "pyright",
         "rust_analyzer",
@@ -60,6 +61,10 @@ return {
             completeUnimported = true,
           },
         },
+      })
+
+      lspconfig.jdtls.setup({
+        capabilities = capabilities,
       })
 
       -- python lsp setup
