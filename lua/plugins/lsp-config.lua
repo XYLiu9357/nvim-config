@@ -63,8 +63,10 @@ return {
         },
       })
 
+      -- java lsp setup
+      -- more setup work is needed, see java.lua
       lspconfig.jdtls.setup({
-        capabilities = capabilities,
+        capabilities=capabilities,
       })
 
       -- python lsp setup
