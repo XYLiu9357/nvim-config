@@ -10,7 +10,7 @@ return {
       ensure_installed = {
         "clangd",
         "dockerls",
-        "gopls",
+        -- "gopls",
         "jdtls",
         "lua_ls",
         "pyright",
@@ -23,7 +23,16 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
+      -- Create a compatibility layer to use new vim.lsp.config API with old syntax
+      local lspconfig = setmetatable({}, {
+        __index = function(_, server)
+          return {
+            setup = function(config)
+              vim.lsp.config[server] = config
+            end
+          }
+        end
+      })
       local capabilities = require("cmp_nvim_lsp").default_capabilities() -- cmp-nvim-lsp support
 
       -- lua lsp setup
@@ -47,26 +56,26 @@ return {
         filetypes = { "dockerfile" },
       })
 
-      -- golang lsp setup
-      lspconfig.gopls.setup({
-        capabilities = capabilities,
-        settings = {
-          gopls = {
-            analyses = {
-              unusedparams = true,
-              shadow = true,
-            },
-            staticcheck = true,
-            usePlaceholders = true,
-            completeUnimported = true,
-          },
-        },
-      })
+      -- -- golang lsp setup
+      -- lspconfig.gopls.setup({
+      --   capabilities = capabilities,
+      --   settings = {
+      --     gopls = {
+      --       analyses = {
+      --         unusedparams = true,
+      --         shadow = true,
+      --       },
+      --       staticcheck = true,
+      --       usePlaceholders = true,
+      --       completeUnimported = true,
+      --     },
+      --   },
+      -- })
 
       -- java lsp setup
       -- more setup work is needed, see java.lua
       lspconfig.jdtls.setup({
-        capabilities=capabilities,
+        capabilities = capabilities,
       })
 
       -- python lsp setup
@@ -88,37 +97,45 @@ return {
 
       -- latex lsp setup
       lspconfig.texlab.setup({
-        capabilities = capabilities,
         settings = {
           texlab = {
             auxDirectory = ".",
-            bibtexFormatter = "/mnt/d/texlive/2023/bin/windows/texlab.exe",
-            build = {
-              args = { "--lualatex", "--synctex", "--interaction=nonstopmode", "--shell-escape", "%f" },
-              executable = "latexmk",
-              forwardSearchAfter = false,
-              onSave = true,
-            },
+            bibtexFormatter = "texlab",
+
             chktex = {
               onEdit = false,
               onOpenAndSave = true,
             },
+
             diagnosticsDelay = 300,
             formatterLineLength = 80,
-            forwardSearch = {
-              args = {},
-              executable = "/mnt/c/Users/flotc/AppData/Local/SumatraPDF.exe",
-              onSave = true,
-            },
-            latexFormatter = "/mnt/d/texlive/2023/bin/windows/latexindent.exe",
+
+            latexFormatter = "latexindent",
             latexindent = {
-              modifyLineBreaks = false,
+              executable = "cmd.exe",
+              args = {
+                "/C",
+                [[D:\texlive\2023\bin\windows\latexindent.exe]],
+              },
+              modifyLineBreaks = true, -- enable so that .latexindent.yaml settings apply
+            },
+
+            forwardSearch = {
+              executable = "cmd.exe",
+              args = {
+                "/C",
+                [[
+                C:\Users\flotc\AppData\Local\SumatraPDF.exe
+                -reuse-instance
+                "%p.pdf"
+                -forward-search "%f" %l
+                ]]
+              },
             },
           },
         },
       })
-
-      -- end of config
+    -- end of config
     end,
   },
 }
