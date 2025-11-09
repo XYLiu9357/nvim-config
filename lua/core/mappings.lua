@@ -30,6 +30,7 @@ map("n", "<leader>e", "<cmd>NvimTreeFocus<CR>", { desc = "nvimtree focus window"
 -- lsp
 map("n", "K", vim.lsp.buf.hover, {})
 vim.keymap.set("n", "<A-S-F>", vim.lsp.buf.format, { noremap = true, desc = "Format buffer using LSP" })
+vim.api.nvim_set_keymap("n", "gd", vim.lsp.buf.definition(), { noremap = true, silent = true })
 
 -- toggle lsp diagnostics info: off by default, see options.lua
 local isLspDiagnosticsVisible = false
