@@ -41,7 +41,7 @@ return {
       -- c++ lsp setup
       lspconfig.clangd.setup({
         capabilities = capabilities,
-        cmd = {
+        init_options = {
           "clangd",
           "--fallback-style=llvm", -- LLVM for 2 space indent, webkit for 4
           "--clang-tidy",
