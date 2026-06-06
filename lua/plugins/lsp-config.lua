@@ -14,7 +14,6 @@ return {
         "jdtls",
         "lua_ls",
         "pyright",
-        "rust_analyzer",
         "texlab",
         -- "matlab_ls",
       },
