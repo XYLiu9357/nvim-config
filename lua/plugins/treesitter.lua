@@ -6,7 +6,7 @@ return {
 		auto_install = true,
 		ensure_installed = {
 			"c",
-			"c++",
+			"cpp",
 			"cmake",
 			"dockerfile",
 			"python",
